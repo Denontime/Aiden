@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # AI助手核心服务
+  ai-assistant-core:
+    build: .
+    container_name: aiden-core
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./models:/app/models
+      - ./config:/app/config
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8000
+      - DATABASE_URL=sqlite:///./data/aiden.db
+      - QDRANT_HOST=qdrant
+      - MQTT_BROKER_HOST=mqtt-broker
+    depends_on:
+      - qdrant
+      - mqtt-broker
+    restart: unless-stopped
+    networks:
+      - aiden-network
+
+  # Qdrant向量数据库
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: aiden-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./data/qdrant:/qdrant/storage
+    restart: unless-stopped
+    networks:
+      - aiden-network
+
+  # MQTT消息代理
+  mqtt-broker:
+    image: eclipse-mosquitto:2
+    container_name: aiden-mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./data/mqtt:/mosquitto/data
+    restart: unless-stopped
+    networks:
+      - aiden-network
+
+networks:
+  aiden-network:
+    driver: bridge
+
+volumes:
+  data:
+  logs:
+  models:

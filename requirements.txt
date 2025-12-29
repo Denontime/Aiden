@@ -1,0 +1,39 @@
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+sqlalchemy==2.0.25
+alembic==1.13.1
+python-dotenv==1.0.0
+python-multipart==0.0.6
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+aiofiles==23.2.1
+httpx==0.26.0
+pyyaml==6.0.1
+
+# 向量数据库
+qdrant-client==1.7.3
+
+# MQTT
+paho-mqtt==1.6.1
+
+# 任务调度
+apscheduler==3.10.4
+
+# 日志
+loguru==0.7.2
+
+# AI/ML基础
+numpy
+opencv-python
+
+# 数据验证
+email-validator==2.1.0
+
+# 开发工具
+pytest==7.4.4
+pytest-asyncio==0.23.3
+black==24.1.1
+flake8==7.0.0
+mypy==1.8.0
