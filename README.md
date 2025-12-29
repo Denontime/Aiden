@@ -48,6 +48,27 @@ Aiden是一个基于边缘计算的智能AI管家系统,部署在家庭环境中
 
 ### 本地开发
 
+#### 使用启动脚本（推荐）
+
+项目提供了跨平台的启动脚本，可以自动处理依赖安装和环境配置：
+
+**Windows:**
+
+```bash
+# 直接双击运行或在命令行执行
+start.bat
+```
+
+**Linux/Mac:**
+
+```bash
+# 给脚本添加执行权限后运行
+chmod +x start.sh
+./start.sh
+```
+
+#### 手动安装
+
 1. **克隆项目**
 
 ```bash
@@ -55,7 +76,7 @@ git clone https://github.com/yourusername/Aiden.git
 cd Aiden
 ```
 
-2. **创建虚拟环境**
+1. **创建虚拟环境**
 
 ```bash
 python -m venv venv
@@ -65,32 +86,62 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-3. **安装依赖**
+1. **安装依赖**
+
+**Windows用户（推荐方法）：**
+
+```bash
+# 首先安装核心依赖
+python -m pip install "pydantic>=2.5.3" "pydantic-settings>=2.1.0"
+
+# 然后安装其他依赖
+python -m pip install fastapi==0.109.0 uvicorn[standard]==0.27.0 sqlalchemy>=2.0.25 alembic==1.13.1 python-dotenv==1.0.0 python-multipart==0.0.6 python-jose[cryptography]==3.3.0 passlib[bcrypt]==1.7.4 aiofiles==23.2.1 httpx==0.26.0 pyyaml==6.0.1 qdrant-client==1.7.3 paho-mqtt==1.6.1 apscheduler==3.10.4 loguru==0.7.2 email-validator==2.1.0 pytest==7.4.4 pytest-asyncio==0.23.3 black==24.1.1 flake8==7.0.0 mypy==1.8.0
+```
+
+**如果上述方法失败，使用预编译包：**
+
+```bash
+python -m pip install --only-binary=all -r requirements.txt
+```
+
+**Linux/Mac用户：**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **配置环境变量**
+1. **配置环境变量**
 
 ```bash
 cp .env.example .env
 # 编辑.env文件,填入必要的API密钥
 ```
 
-5. **初始化数据库**
+**注意：** 需要修复环境变量配置以匹配代码中的字段名：
+
+```bash
+# 在.env文件中，将以下字段名进行修改：
+# DEBUG=true → SERVER_DEBUG_MODE=true
+# FACE_DETECTION_INTERVAL=1.0 → FACE_RECOGNITION_DETECTION_INTERVAL_SEC=1.0
+```
+
+1. **初始化数据库**
 
 ```bash
 python -c "from src.models import init_db; init_db()"
 ```
 
-6. **启动服务**
+1. **启动服务**
 
 ```bash
+# 使用启动脚本（推荐）
+python run_app.py
+
+# 或直接运行
 python src/main.py
 ```
 
-访问 http://localhost:8000/docs 查看API文档
+访问 <http://localhost:8000/docs> 查看API文档
 
 ### Docker部署
 
@@ -154,8 +205,8 @@ Aiden/
 
 启动服务后访问:
 
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: <http://localhost:8000/docs>
+- ReDoc: <http://localhost:8000/redoc>
 
 ### 主要API端点
 
@@ -218,8 +269,8 @@ Aiden/
 
 ## 联系方式
 
-- 项目主页: https://github.com/yourusername/Aiden
-- 问题反馈: https://github.com/yourusername/Aiden/issues
+- 项目主页: <https://github.com/yourusername/Aiden>
+- 问题反馈: <https://github.com/yourusername/Aiden/issues>
 
 ---
 
